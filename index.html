@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampaignIQ — AI Decision Engine</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080f12;
+      --panel: #101b20;
+      --panel-2: #15242a;
+      --line: rgba(255,255,255,.12);
+      --text: #f2f6f1;
+      --muted: #94a8a2;
+      --lime: #c5ef68;
+      --cyan: #62dbc8;
+      --orange: #ff8a4c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 80% 0%, rgba(98,219,200,.18), transparent 36%),
+        radial-gradient(circle at 20% 10%, rgba(197,239,104,.12), transparent 34%),
+        var(--bg);
+      color: var(--text);
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1120px, calc(100% - 36px)); margin: 0 auto; }
+    header { padding: 28px 0; display: flex; justify-content: space-between; align-items: center; color: var(--muted); }
+    .brand { color: var(--text); font-weight: 900; letter-spacing: -.03em; }
+    .brand span { color: var(--lime); }
+    .pill { border: 1px solid rgba(255,138,76,.42); color: var(--orange); border-radius: 999px; padding: 10px 14px; font-size: 13px; font-weight: 750; background: rgba(255,138,76,.08); }
+    .hero { padding: 72px 0 36px; display: grid; grid-template-columns: 1.08fr .92fr; gap: 30px; align-items: end; }
+    .eyebrow { margin: 0 0 14px; color: var(--lime); font-size: 12px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(46px, 7vw, 88px); line-height: .92; letter-spacing: -.07em; }
+    h2 { margin: 0 0 14px; font-size: clamp(28px, 4vw, 44px); line-height: 1; letter-spacing: -.045em; }
+    h3 { margin: 10px 0 7px; font-size: 18px; }
+    .lead { margin: 22px 0 0; max-width: 650px; color: var(--muted); font-size: 18px; }
+    .hero-card, .panel, .mockup, .flow article {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(16,27,32,.9);
+      box-shadow: 0 24px 80px rgba(0,0,0,.22);
+    }
+    .hero-card, .panel, .flow article { padding: 22px; }
+    .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+    .metric { padding: 16px; border-radius: 16px; background: var(--panel-2); border: 1px solid var(--line); }
+    .metric span { display: block; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
+    .metric strong { display: block; font-size: 28px; color: var(--text); line-height: 1; }
+    section { padding: 42px 0; }
+    .section-copy { max-width: 620px; color: var(--muted); margin: 0 0 18px; }
+    .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .flow span { color: var(--lime); font-size: 12px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+    .flow p, .panel p, li { color: var(--muted); }
+    .split { display: grid; grid-template-columns: .92fr 1.08fr; gap: 16px; align-items: start; }
+    .mockup { padding: 18px; background: #0d171b; }
+    .mock-top { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 14px; color: var(--muted); font-size: 12px; }
+    .verdict { padding: 18px; border-radius: 18px; background: #13241f; border: 1px solid #365347; margin-bottom: 12px; display: flex; justify-content: space-between; gap: 20px; }
+    .verdict b { display: block; color: var(--lime); font-size: 30px; letter-spacing: -.04em; }
+    .confidence { color: var(--cyan); font-size: 40px; font-weight: 950; }
+    .packet { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; margin-bottom: 12px; }
+    .packet div { padding: 12px; border: 1px solid var(--line); border-radius: 13px; background: #101b20; }
+    .packet span { display: block; color: var(--muted); font-size: 10px; text-transform: uppercase; margin-bottom: 5px; }
+    .packet strong { display: block; font-size: 16px; }
+    .channels { display: grid; gap: 9px; }
+    .channel { padding: 13px; border: 1px solid var(--line); border-radius: 13px; background: var(--panel-2); }
+    .channel .row { display: flex; justify-content: space-between; }
+    .bar { height: 5px; margin-top: 10px; background: #233238; border-radius: 999px; overflow: hidden; }
+    .bar i { display: block; height: 100%; background: var(--cyan); }
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .stack { display: flex; flex-wrap: wrap; gap: 10px; }
+    .stack span { padding: 9px 12px; border-radius: 999px; background: var(--panel-2); border: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    footer { padding: 50px 0 70px; color: var(--muted); }
+    @media (max-width: 860px) {
+      .hero, .split, .features { grid-template-columns: 1fr; }
+      .flow, .packet { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      header { display: block; }
+      .pill { display: inline-block; margin-top: 14px; }
+      .flow, .packet, .metric-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <a class="brand" href="#">CampaignIQ <span>/ AI Decision Engine</span></a>
+    <span class="pill">Public showcase / private implementation</span>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <div>
+        <p class="eyebrow">Portfolio Case Study</p>
+        <h1>Turning campaign guesses into explainable decisions.</h1>
+        <p class="lead">CampaignIQ is an AI decision-support dashboard for comparing marketing channels, stress-testing assumptions, and learning from actual campaign performance.</p>
+      </div>
+      <aside class="hero-card">
+        <p class="eyebrow">Example Decision Packet</p>
+        <div class="metric-grid">
+          <div class="metric"><span>Recommendation</span><strong>Instagram Reels</strong></div>
+          <div class="metric"><span>Confidence</span><strong>89%</strong></div>
+          <div class="metric"><span>Expected CPA</span><strong>EUR 18.64</strong></div>
+          <div class="metric"><span>Loop status</span><strong>Measured</strong></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="wrap">
+      <h2>Demo narrative</h2>
+      <p class="section-copy">The product is designed around one practical business question: which campaign channel deserves budget, and why?</p>
+      <div class="flow">
+        <article><span>01 Brief</span><h3>Compare assumptions</h3><p>Budget, reach, engagement, conversion rate, brand fit and risk.</p></article>
+        <article><span>02 Decision</span><h3>Score alternatives</h3><p>Weighted scoring produces recommendation, confidence and ranked alternatives.</p></article>
+        <article><span>03 What-if</span><h3>Stress test</h3><p>Scenario analysis changes assumptions without overwriting the baseline decision.</p></article>
+        <article><span>04 Learn</span><h3>Record actuals</h3><p>Actual conversions and CPA close the loop with a learning insight.</p></article>
+      </div>
+    </section>
+
+    <section class="wrap split">
+      <div>
+        <p class="eyebrow">Product Preview</p>
+        <h2>Not a generic dashboard. A decision packet.</h2>
+        <p class="section-copy">The interface surfaces the recommendation, business impact, confidence, audit trail and whether the prediction has been validated by real data.</p>
+      </div>
+      <div class="mockup" aria-label="CampaignIQ product mockup">
+        <div class="mock-top"><span>CampaignIQ / Recommendation output</span><span>Decision #8</span></div>
+        <div class="verdict">
+          <div><span class="eyebrow">Recommended channel</span><b>Instagram Reels</b></div>
+          <div class="confidence">89%</div>
+        </div>
+        <div class="packet">
+          <div><span>Expected conversions</span><strong>182.4</strong></div>
+          <div><span>Expected CPA</span><strong>EUR 18.64</strong></div>
+          <div><span>Decision confidence</span><strong>89%</strong></div>
+          <div><span>Measured loop</span><strong>beat / +21.9</strong></div>
+        </div>
+        <div class="channels">
+          <div class="channel"><div class="row"><strong>Instagram Reels</strong><span>94.2</span></div><div class="bar"><i style="width:94%"></i></div></div>
+          <div class="channel"><div class="row"><strong>TikTok</strong><span>79.3</span></div><div class="bar"><i style="width:79%"></i></div></div>
+          <div class="channel"><div class="row"><strong>YouTube Shorts</strong><span>73.1</span></div><div class="bar"><i style="width:73%"></i></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <h2>What it proves</h2>
+      <div class="features">
+        <article class="panel"><h3>Explainable recommendation</h3><p>Every output includes rationale, confidence, ranked alternatives and weighted criteria.</p></article>
+        <article class="panel"><h3>Decision audit trail</h3><p>Campaign creation, recommendation generation, what-if analysis and actuals are recorded as events.</p></article>
+        <article class="panel"><h3>Learning loop</h3><p>Actual performance creates measured status and a next-step insight for the following iteration.</p></article>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <h2>Stack</h2>
+      <div class="stack">
+        <span>Python</span><span>PostgreSQL</span><span>Docker</span><span>REST API</span><span>HTML/CSS/JS</span><span>Decision scoring</span><span>Audit events</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    CampaignIQ is a portfolio MVP. Public story, private implementation.
+  </footer>
+</body>
+</html>
