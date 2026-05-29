@@ -4,6 +4,10 @@ CampaignIQ is a portfolio case study for an AI decision-support dashboard that h
 
 This repository is a **public showcase** version. The full implementation and private working files are not included.
 
+## Live Case Study
+
+https://7tjbt66zwg-sys.github.io/campaigniq-showcase/
+
 ## What It Does
 
 CampaignIQ turns a campaign brief into a defensible channel decision.
@@ -75,4 +79,3 @@ This public repository is meant to show:
 ## Status
 
 Portfolio MVP. Demo available on request.
-
